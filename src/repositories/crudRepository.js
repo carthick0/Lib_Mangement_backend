@@ -27,6 +27,18 @@ class CrudRepository {
   async delete(id) {
     return await this.model.findByIdAndDelete(id);
   }
+
+  async getAll() {
+    return await this.model.find();
+  }
+
+  async findOneAndUpdate(filter, update, options = { new: true }) {
+    return await this.model.findOneAndUpdate(filter, update, options);
+  }
+
+  async findByIdAndUpdate(id, update, options = { new: true }) {
+    return await this.model.findByIdAndUpdate(id, update, options);
+  }
 }
 
 export default CrudRepository;

@@ -1,8 +1,9 @@
-const book =require( "../models/book");
-const CrudRepository =require( "./crudRepository");
-
+const Book =require( "../models/book");
+const { default: CrudRepository } = require("./crudRepository");
 class BookRepository extends CrudRepository{
     constructor(){
-        super(book)
+        super(Book)
     }
 }
+
+module.exports=new BookRepository();

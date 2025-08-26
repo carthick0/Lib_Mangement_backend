@@ -1,8 +1,8 @@
-const borrow = require("../models/borrow")
-const CrudRepository =require("./crudRepository")
+const Borrow = require("../models/borrow")
+const { default: CrudRepository } = require("./crudRepository");
 class BorrowRepository extends CrudRepository{
     constructor(){
-        super(borrow)
+        super(Borrow)
     }
 }
 
