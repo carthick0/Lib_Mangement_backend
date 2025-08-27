@@ -39,10 +39,20 @@ async function getAllBooks(){
         throw error;
     }
 }
+async function getBookById(id){
+    try {
+        const book=await bookRepository.findOne(id);
+        return book
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
 
 module.exports={
     addBook,
     updateBook,
     deleteBook,
-    getAllBooks
+    getAllBooks,
+    getBookById
 }

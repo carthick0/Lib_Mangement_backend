@@ -1,28 +1,33 @@
-const express=require("express");
+const express = require("express");
 const { PORT } = require("./config/serverConfig");
-const  connectDB = require("./config/dbConfig");
-const userRoutes=require("./routes/userRoutes.js");
-const bookRoutes=require('./routes/bookRoutes.js');
-const borrowRoutes=require('./routes/borrowRoutes.js')
-const app=express();
+const connectDB = require("./config/dbConfig");
 
-app.use(express.urlencoded({extended:true}));
+const userRoutes = require("./routes/userRoutes");
+const bookRoutes = require("./routes/bookRoutes");
+const borrowRoutes = require("./routes/borrowRoutes");
+const initGraphQL = require("./graphQL/index");
+
+const app = express();
+
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use('/api/user',userRoutes);
-app.use('/api/books',bookRoutes);
-app.use('/api/book',borrowRoutes)
+app.use("/api/user", userRoutes);
+app.use("/api/books", bookRoutes);
+app.use("/api/book", borrowRoutes);
 
-app.get('/readyz',(req,res)=>{
-  return res.json({message:"OK"})
+app.get("/readyz", (req, res) => res.json({ message: "OK" }));
+
+initGraphQL(app).then(() => {
+  console.log(`🚀 GraphQL endpoint ready at http://localhost:${PORT}/graphql`);
 });
 
 app.listen(PORT, async () => {
   console.log(`🚀 Server running on port ${PORT}`);
   try {
     await connectDB();
-    console.log('✅ DB connected successfully');
+    console.log("✅ DB connected successfully");
   } catch (err) {
-    console.error('❌ DB connection failed', err);
+    console.error("❌ DB connection failed", err);
   }
 });
